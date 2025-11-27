@@ -189,18 +189,6 @@
             transition-delay: 0.4s;
         }
 
-        .values-header {
-            text-align: center;
-            margin-bottom: 20px;
-            margin-top: 40px;
-        }
-
-        .values-header h2 {
-            font-size: 2rem;
-            color: var(--text-main);
-            font-weight: 700;
-        }
-
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -529,10 +517,6 @@
 
         <!-- VALUES LAYER -->
         <div class="values-layer">
-            <header class="values-header">
-                <h2>Grantsin arvot</h2>
-            </header>
-
             <main class="main-content">
                 <!-- Left Side: Visualization -->
                 <div class="visual-container">
@@ -541,7 +525,7 @@
                         <div class="orbit-circle-bg"></div>
                         
                         <!-- Center -->
-                        <div class="node center active" onclick="activate(0)" data-id="0">
+                        <div class="node center" onclick="activate(0)" data-id="0">
                             <span class="node-letter">A</span>
                             <span class="node-text">ASIAKASARVO</span>
                         </div>
@@ -565,7 +549,7 @@
 
                     <!-- Mobile Nav -->
                     <div class="mobile-nav">
-                        <div class="mobile-btn active" onclick="activate(0)" data-id="0">
+                        <div class="mobile-btn" onclick="activate(0)" data-id="0">
                             <span class="node-letter">A</span>
                             <span class="node-text">ASIAKASARVO</span>
                         </div>
@@ -587,8 +571,18 @@
                 <!-- Right Side: Content Card -->
                 <div class="content-area">
                     
+                    <!-- Initial content: Grantsin arvot -->
+                    <div id="content-initial" class="content-item active">
+                        <div class="content-header">
+                            <h2>Grantsin arvot</h2>
+                        </div>
+                        <div class="content-body">
+                            <p style="color: var(--text-muted); font-style: italic;">Klikkaa ympyröitä nähdäksesi arvomme</p>
+                        </div>
+                    </div>
+
                     <!-- Content 0: ASIAKASARVO -->
-                    <div id="content-0" class="content-item active">
+                    <div id="content-0" class="content-item">
                         <div class="content-header">
                             <span class="content-number">A</span>
                             <h2>ASIAKASARVO</h2>
