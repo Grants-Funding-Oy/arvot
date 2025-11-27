@@ -471,6 +471,8 @@
                 <p>Teemme työtä ylpeydellä, jotta kasvuyritykset voivat menestyä ja rakentaa uutta ympärilleen.</p>
                 <br>
                 <p>Olemme oikea paikka ihmisille, jotka haluavat ottaa vastuuta, kasvaa ammattilaisina ja tehdä kovia tuloksia.</p>
+                <br>
+                <p><strong>Tehdään yhdessä kovaa tulosta inhimillisesti.</strong></p>
             </div>
             <!-- Visual indicator -->
             <div class="intro-indicator">
@@ -576,6 +578,7 @@
 
     <script>
         let autoTimer;
+        let hasScrolled = false;
 
         function startTimer() {
             if(autoTimer) clearTimeout(autoTimer);
@@ -583,7 +586,7 @@
                 if(document.body.classList.contains('state-intro')) {
                     enterValues();
                 }
-            }, 10000);
+            }, 20000);
         }
 
         function enterValues() {
@@ -591,6 +594,7 @@
             document.body.classList.remove('state-intro');
             document.body.classList.add('state-values');
             if(autoTimer) clearTimeout(autoTimer);
+            hasScrolled = false;
         }
 
         function enterIntro() {
@@ -598,6 +602,7 @@
             document.body.classList.remove('state-values');
             document.body.classList.add('state-intro');
             startTimer();
+            hasScrolled = false;
         }
 
         function activate(id) {
@@ -613,6 +618,32 @@
             const content = document.getElementById(`content-${id}`);
             if (content) content.classList.add('active');
         }
+
+        // Scroll detection for intro -> values transition
+        window.addEventListener('wheel', function(e) {
+            if(document.body.classList.contains('state-intro') && !hasScrolled) {
+                if(e.deltaY > 0) { // Scrolling down
+                    hasScrolled = true;
+                    enterValues();
+                }
+            }
+        });
+
+        // Touch detection for mobile
+        let touchStartY = 0;
+        window.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        window.addEventListener('touchmove', function(e) {
+            if(document.body.classList.contains('state-intro') && !hasScrolled) {
+                let touchEndY = e.touches[0].clientY;
+                if(touchStartY - touchEndY > 50) { // Swiped up
+                    hasScrolled = true;
+                    enterValues();
+                }
+            }
+        });
 
         window.onload = startTimer;
     </script>
