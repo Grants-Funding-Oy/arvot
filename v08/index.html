@@ -461,21 +461,42 @@
         }
 
         @media (max-width: 768px) {
-            /* Salli pull-to-refresh, estä vain pystysuuntainen bounce */
+            /* Resetoi overflow ja estä bounce */
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                overscroll-behavior-y: none;
+            }
+
             body.state-values {
                 position: fixed;
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
             }
-
+            
             body.state-intro {
                 overflow: auto;
             }
 
+            /* Wrapper käyttää dynaamista viewport heightia */
+            body.state-values .wrapper {
+                height: 100vh; /* Fallback */
+                height: 100dvh;
+                width: 100%;
+                padding: 60px 15px 15px;
+                display: flex;
+                flex-direction: column;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+
             .back-nav {
+                position: absolute;
                 top: 20px;
-                left: 15px;
+                left: 20px;
+                z-index: 100;
             }
 
             .intro-title {
@@ -488,47 +509,43 @@
                 line-height: 1.5;
             }
 
-            /* Wrapper: täytä näkyvä alue */
-            body.state-values .wrapper {
-                padding: 60px 10px 15px;
-                height: 100%;
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-            }
-
             .main-content {
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
-                flex: 1;
-                min-height: 0;
+                width: 100%;
+                height: 100%;
+                gap: 10px;
+                position: relative;
             }
-
-            /* Tekstilaatikko ylös */
+            
+            /* TEKSTILAATIKKO YLHÄÄLLÄ */
             .content-area {
-                padding: 18px 12px;
-                max-height: 30vh;
+                flex: 0 0 auto;
+                max-height: 35%;
                 overflow-y: auto;
-                flex-shrink: 0;
+                z-index: 20;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(5px);
+                /* Hienosäätöä */
+                margin-bottom: 10px;
             }
-
+            
             .content-area.initial-state {
-                padding: 22px 12px;
+                padding: 20px 15px;
             }
 
-            /* Ympyrät alas - lähempänä tekstiä */
+            /* PALLOT ALHAALLA - Vie lopputilan */
             .orbit-system {
-                max-width: 90vw;
-                width: 90vw;
-                flex: 1;
-                min-height: 0;
-                margin: 0 auto;
+                flex: 1 1 auto;
+                width: 100%;
+                position: relative;
                 display: flex;
-                align-items: center;
                 justify-content: center;
+                align-items: center;
+                min-height: 0;
+                z-index: 10;
             }
-
+            
             /* Nuoli alaspäin */
             .arrow-hint svg {
                 transform: rotate(0deg) !important;
@@ -537,52 +554,54 @@
             .arrow-hint:hover svg {
                 transform: scale(1.15) !important;
             }
-
+            
+            /* Pallot hieman pienennetty turvallisuuden vuoksi */
             .node.center {
-                width: 135px;
-                height: 135px;
-                font-size: 0.95rem;
+                width: 125px;
+                height: 125px;
+                font-size: 0.9rem;
             }
 
             .node.center .node-letter {
-                font-size: 3.3rem;
+                font-size: 3rem;
             }
 
             .node.center .node-text {
-                font-size: 0.9rem;
-                line-height: 1.25;
-                padding: 0 8px;
+                font-size: 0.85rem;
+                line-height: 1.2;
+                padding: 0 6px;
             }
 
             .node.satellite {
-                width: 110px;
-                height: 110px;
-                font-size: 0.75rem;
+                width: 100px;
+                height: 100px;
+                font-size: 0.7rem;
             }
 
             .node.satellite .node-letter {
-                font-size: 2.3rem;
+                font-size: 2.2rem;
             }
 
             .node.satellite .node-text {
-                font-size: 0.75rem;
-                line-height: 1.25;
-                padding: 0 6px;
+                font-size: 0.7rem;
+                line-height: 1.2;
+                padding: 0 5px;
             }
             
+            /* Asemointi suhteessa orbit-alueeseen */
             .pos-1 { 
                 top: 5%; 
                 left: 50%; 
-                margin-left: -55px; 
+                margin-left: -50px; 
             }
 
             .pos-2 { 
-                bottom: 22%; 
+                bottom: 20%; 
                 right: 5%; 
             }
 
             .pos-3 { 
-                bottom: 22%; 
+                bottom: 20%; 
                 left: 5%; 
             }
 
