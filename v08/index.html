@@ -508,60 +508,73 @@
 
         @media (max-width: 500px) {
             .orbit-system {
-                display: none;
+                max-width: 280px;
+            }
+
+            .node.center {
+                width: 90px;
+                height: 90px;
+                font-size: 0.85rem;
+            }
+
+            .node.center .node-letter {
+                font-size: 2.8rem;
+            }
+
+            .node.satellite {
+                width: 70px;
+                height: 70px;
+                font-size: 0.7rem;
+            }
+
+            .node-letter {
+                font-size: 2rem !important;
+            }
+
+            .node.center .node-text {
+                font-size: 0.85rem;
+            }
+
+            .node.satellite .node-text {
+                font-size: 0.65rem;
+                line-height: 1.2;
             }
             
-            .mobile-nav {
-                display: flex;
-                gap: 10px;
-                flex-wrap: wrap;
-                justify-content: center;
-                margin-bottom: 20px;
-            }
-            
-            .mobile-btn {
-                padding: 10px 20px;
-                background: var(--grants-beige);
-                border: 1px solid var(--grants-beige);
-                border-radius: 20px;
-                font-weight: 600;
-                font-size: 0.9rem;
-                color: var(--grants-purple);
-            }
-            
-            .mobile-btn.active {
-                background: var(--grants-turquoise);
-                color: white;
-                border-color: var(--grants-turquoise);
+            .pos-1 { 
+                top: 5%; 
+                left: 50%; 
+                margin-left: -35px; 
             }
 
-            .mobile-btn.opened {
-                background: var(--grants-turquoise);
-                color: white;
-                border-color: var(--grants-turquoise);
+            .pos-2 { 
+                bottom: 22%; 
+                right: 8%; 
             }
 
-            /* Joulukalenteri mobile-napeille */
-            .mobile-btn .node-letter {
-                font-size: 1.2rem;
-                font-weight: 900;
+            .pos-3 { 
+                bottom: 22%; 
+                left: 8%; 
             }
 
-            .mobile-btn .node-text {
-                display: none;
+            .content-area {
+                padding: 30px 20px;
             }
 
-            .mobile-btn.opened .node-letter {
-                display: none;
+            h2 {
+                font-size: 1.4rem;
             }
 
-            .mobile-btn.opened .node-text {
-                display: inline;
+            .content-body {
+                font-size: 1rem;
+            }
+
+            .content-number {
+                font-size: 2.5rem;
             }
         }
         
-        @media (min-width: 501px) {
-            .mobile-nav { display: none; }
+        .mobile-nav { 
+            display: none !important; 
         }
     </style>
 </head>
