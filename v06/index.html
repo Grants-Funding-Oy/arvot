@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grantsin arvot</title>
+    <style>
+        :root {
+            --primary-color: #007871;
+            --primary-dark: #005c57;
+            --secondary-color: #5c3a66;
+            --bg-color: #f8f9fa;
+            --text-main: #1a1a1a;
+            --text-muted: #555;
+            --card-bg: #ffffff;
+            --transition-speed: 0.8s;
+            --circle-size-desktop: 500px;
+            --center-node-size: 140px;
+            --satellite-node-size: 110px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Klikkausalue koko ruudulle INTRO-tilassa */
+        .intro-click-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100; /* Päällä kaiken muun */
+            cursor: pointer;
+            display: none; /* Oletuksena piilossa */
+        }
+
+        body.state-intro .intro-click-area {
+            display: block; /* Vain intro-tilassa käytössä */
+        }
+
+        .wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Intro View Styles --- */
+        .intro-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            pointer-events: none; /* TÄRKEÄ: Päästää klikkaukset läpi taustalle */
+        }
+
+        body.state-intro .intro-layer {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        body.state-values .intro-layer {
+            opacity: 0;
+            transform: translate(-50%, -60%) scale(0.95);
+        }
+
+        .intro-title {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.5;
+        }
+
+        .intro-indicator {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+
+        .intro-indicator svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--primary-color);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* --- Back Navigation --- */
+        .back-nav {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease 1s;
+            z-index: 200; /* TÄRKEÄ: Values-tilassa päällä */
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+        }
+
+        body.state-values .back-nav {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto; /* Vain values-tilassa aktiivinen */
+        }
+
+        .back-nav:hover {
+            color: var(--primary-color);
+        }
+
+        .back-nav svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            transition: transform 0.2s;
+        }
+
+        .back-nav:hover svg {
+            transform: translateX(-4px);
+        }
+
+        /* --- Values View Styles --- */
+        .values-layer {
+            width: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(30px);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        body.state-values .values-layer {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+            transition-delay: 0.4s;
+        }
+
+        .values-header {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 40px;
+        }
+
+        .values-header h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .orbit-system {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            max-width: var(--circle-size-desktop);
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .orbit-circle-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            border: 2px dashed rgba(0, 120, 113, 0.15);
+            border-radius: 50%;
+            transition: opacity 1s ease;
+        }
+
+        .node {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            z-index: 5;
+            font-weight: 700;
+            font-size: 0.9rem;
+            user-select: none;
+            border: 3px solid white;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        body.state-values .node {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        body.state-values .node.center { transition-delay: 0.5s; }
+        body.state-values .node.pos-1 { transition-delay: 0.6s; }
+        body.state-values .node.pos-2 { transition-delay: 0.7s; }
+        body.state-values .node.pos-3 { transition-delay: 0.8s; }
+
+        .node:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            z-index: 10;
+            transition-delay: 0s !important;
+        }
+        
+        .node.center {
+            width: var(--center-node-size);
+            height: var(--center-node-size);
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            color: var(--text-main);
+            font-size: 1.1rem;
+            border: 4px solid white;
+        }
+        
+        .node.center.active {
+            background: var(--text-main);
+            color: white;
+            border-color: var(--text-main);
+            transform: scale(1.1) !important;
+        }
+
+        .node.satellite {
+            width: var(--satellite-node-size);
+            height: var(--satellite-node-size);
+            background: white;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .node.satellite.active {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1) !important;
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 25px rgba(0, 120, 113, 0.3);
+        }
+        
+        .pos-1 { top: 5%; left: 50%; margin-left: -55px; }
+        .pos-2 { bottom: 22%; right: 8%; } 
+        .pos-3 { bottom: 22%; left: 8%; }
+
+        .content-area {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.03);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.8s ease 0.8s;
+        }
+
+        body.state-values .content-area {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .content-item {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .content-item.active {
+            display: block;
+        }
+
+        .content-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .content-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(0, 120, 113, 0.1);
+            line-height: 1;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .content-body {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        
+        .content-body strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 850px) {
+            .wrapper {
+                justify-content: flex-start;
+                padding-top: 80px;
+            }
+            
+            .back-nav {
+                top: 20px;
+                left: 20px;
+            }
+
+            .intro-title {
+                font-size: 1.6rem;
+                line-height: 1.2;
+            }
+            
+            .intro-subtitle {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .orbit-system {
+                max-width: 350px;
+            }
+
+            .node.center {
+                width: 110px;
+                height: 110px;
+                font-size: 0.9rem;
+            }
+
+            .node.satellite {
+                width: 90px;
+                height: 90px;
+                font-size: 0.8rem;
+                margin: 0;
+            }
+            
+            .pos-1 { margin-left: -45px; }
+        }
+
+        @media (max-width: 500px) {
+            .orbit-system {
+                display: none;
+            }
+            
+            .mobile-nav {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            
+            .mobile-btn {
+                padding: 10px 20px;
+                background: white;
+                border: 1px solid #eee;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                color: var(--text-muted);
+            }
+            
+            .mobile-btn.active {
+                background: var(--primary-color);
+                color: white;
+                border-color: var(--primary-color);
+            }
+        }
+        
+        @media (min-width: 501px) {
+            .mobile-nav { display: none; }
+        }
+    </style>
+</head>
+<body class="state-intro">
+
+    <!-- VARMA TRIGGER: Tämä div on kaiken päällä intro-tilassa -->
+    <div class="intro-click-area" onclick="enterValues()"></div>
+
+    <div class="wrapper">
+        
+        <!-- BACK NAVIGATION -->
+        <div class="back-nav" onclick="enterIntro()">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            <span>Koska erinomaiset...</span>
+        </div>
+
+        <!-- INTRO LAYER -->
+        <div class="intro-layer">
+            <h1 class="intro-title">Koska erinomaiset ideat ansaitsevat todellisen mahdollisuuden</h1>
+            <div class="intro-subtitle">
+                <p>Teemme työtä ylpeydellä, jotta kasvuyritykset voivat menestyä ja rakentaa uutta ympärilleen.</p>
+                <br>
+                <p>Olemme oikea paikka ihmisille, jotka haluavat kehittyä ammattilaisina ja ottaa vastuuta.</p>
+                <br>
+                <p><strong>Tehdään yhdessä kovaa tulosta inhimillisesti.</strong></p>
+            </div>
+            <!-- Visual indicator -->
+            <div class="intro-indicator">
+                <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </div>
+        </div>
+
+        <!-- VALUES LAYER -->
+        <div class="values-layer">
+            <header class="values-header">
+                <h2>Grantsin arvot</h2>
+            </header>
+
+            <main class="main-content">
+                <!-- Left Side: Visualization -->
+                <div class="visual-container">
+                    <!-- Desktop Orbit System -->
+                    <div class="orbit-system">
+                        <div class="orbit-circle-bg"></div>
+                        
+                        <!-- Center -->
+                        <div class="node center active" onclick="activate(0)" data-id="0">
+                            ASIAKASARVO
+                        </div>
+
+                        <!-- Satellites -->
+                        <div class="node satellite pos-1" onclick="activate(3)" data-id="3">
+                            toistemme<br>tukeminen
+                        </div>
+
+                        <div class="node satellite pos-2" onclick="activate(1)" data-id="1">
+                            tehokas<br>tekeminen
+                        </div>
+
+                        <div class="node satellite pos-3" onclick="activate(2)" data-id="2">
+                            tAItojen<br>kehittäminen
+                        </div>
+                    </div>
+
+                    <!-- Mobile Nav -->
+                    <div class="mobile-nav">
+                        <div class="mobile-btn active" onclick="activate(0)" data-id="0">ASIAKASARVO</div>
+                        <div class="mobile-btn" onclick="activate(3)" data-id="3">toistemme tukeminen</div>
+                        <div class="mobile-btn" onclick="activate(1)" data-id="1">tehokas tekeminen</div>
+                        <div class="mobile-btn" onclick="activate(2)" data-id="2">tAItojen kehittäminen</div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Content Card -->
+                <div class="content-area">
+                    
+                    <!-- Content 0: ASIAKASARVO -->
+                    <div id="content-0" class="content-item active">
+                        <div class="content-header">
+                            <span class="content-number">A</span>
+                            <h2>ASIAKASARVO</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>Tuomme pöytään dataa, analyysiä ja rohkeita ehdotuksia, jotta asiakas saa <strong>parhaan mahdollisen tuloksen</strong>. Olemme ylpeitä työstämme ja pidämme kiinni sopimuksista molempiin suuntiin. Osaamme asettua asiakkaan saappaisiin, ja kanssamme on miellyttävä työskennellä.</p>
+                        </div>
+                    </div>
+
+                    <!-- Content 1: tehokas tekeminen -->
+                    <div id="content-1" class="content-item">
+                        <div class="content-header">
+                            <span class="content-number">T</span>
+                            <h2>tehokas tekeminen</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>Teemme oikeat asiat <strong>hyvällä askeltiheydellä</strong>, jolloin syntyy tulosta ja vahva tekemisen meininki. Vastuun kantaminen luo luottamusta ja <strong>vapaus</strong> antaa mahdollisuuden toimia joustavasti.</p>
+                        </div>
+                    </div>
+
+                    <!-- Content 2: tAItojen kehittäminen -->
+                    <div id="content-2" class="content-item">
+                        <div class="content-header">
+                            <span class="content-number">T</span>
+                            <h2>tAItojen kehittäminen</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>Kehitymme yksilöinä ja yrityksenä ottamalla uudet taidot ja teknologiat nopeasti käyttöön. <strong>AI on modernin työn keskeinen taito</strong>, ja varmistamme että kaikki pysyvät mukana. Automatisoimme kaiken, mikä tehostaa työtä ja vie meitä eteenpäin.</p>
+                        </div>
+                    </div>
+
+                    <!-- Content 3: toistemme tukeminen -->
+                    <div id="content-3" class="content-item">
+                        <div class="content-header">
+                            <span class="content-number">T</span>
+                            <h2>toistemme tukeminen</h2>
+                        </div>
+                        <div class="content-body">
+                            <p>Paikka tiimissä ansaitaan <strong>teoilla ja asenteella</strong>, mutta kun olet mukana, tiimi kantaa myös vaikeina hetkinä eikä ketään jätetä yksin. <strong>Palaute kuuluu arkeen</strong> ja sitä annetaan rehellisesti sekä kiitoksena että korjauksena.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        let autoTimer;
+        let hasScrolled = false;
+
+        function startTimer() {
+            if(autoTimer) clearTimeout(autoTimer);
+            autoTimer = setTimeout(() => {
+                if(document.body.classList.contains('state-intro')) {
+                    enterValues();
+                }
+            }, 20000);
+        }
+
+        function enterValues() {
+            console.log("Entering values view..."); // Debug
+            document.body.classList.remove('state-intro');
+            document.body.classList.add('state-values');
+            if(autoTimer) clearTimeout(autoTimer);
+            hasScrolled = false;
+        }
+
+        function enterIntro() {
+            console.log("Entering intro view..."); // Debug
+            document.body.classList.remove('state-values');
+            document.body.classList.add('state-intro');
+            startTimer();
+            hasScrolled = false;
+        }
+
+        function activate(id) {
+            document.querySelectorAll('.node, .mobile-btn').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.content-item').forEach(el => el.classList.remove('active'));
+
+            const nodes = document.querySelectorAll(`.node[data-id="${id}"]`);
+            nodes.forEach(n => n.classList.add('active'));
+
+            const btns = document.querySelectorAll(`.mobile-btn[data-id="${id}"]`);
+            btns.forEach(b => b.classList.add('active'));
+
+            const content = document.getElementById(`content-${id}`);
+            if (content) content.classList.add('active');
+        }
+
+        // Scroll detection for intro -> values transition
+        window.addEventListener('wheel', function(e) {
+            if(document.body.classList.contains('state-intro') && !hasScrolled) {
+                if(e.deltaY > 0) { // Scrolling down
+                    hasScrolled = true;
+                    enterValues();
+                }
+            }
+        });
+
+        // Touch detection for mobile
+        let touchStartY = 0;
+        window.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        window.addEventListener('touchmove', function(e) {
+            if(document.body.classList.contains('state-intro') && !hasScrolled) {
+                let touchEndY = e.touches[0].clientY;
+                if(touchStartY - touchEndY > 50) { // Swiped up
+                    hasScrolled = true;
+                    enterValues();
+                }
+            }
+        });
+
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
