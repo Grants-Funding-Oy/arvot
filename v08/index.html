@@ -461,142 +461,97 @@
         }
 
         @media (max-width: 768px) {
-            /* 1. LUKITAAN NÄYTTÖ */
-            html, body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                height: 100%;
-                overflow: hidden !important;
-                position: fixed;
+            /* === MOBIILINÄKYMÄ - UUDELLEENKIRJOITETTU === */
+            
+            /* Intro-sivu normaalisti scrollattava */
+            .intro-title {
+                font-size: 1.6rem;
+                line-height: 1.2;
             }
             
-            body.state-intro {
-                position: relative;
-                overflow: auto !important;
-                height: auto;
+            .intro-subtitle {
+                font-size: 0.95rem;
+                line-height: 1.5;
             }
 
-            /* 2. PÄÄRAKENNE */
-            body.state-values .wrapper {
-                display: flex;
-                flex-direction: column;
-                height: 100dvh; /* Käytä dvh mobiilille */
-                width: 100%;
-                padding: 0;
-                box-sizing: border-box;
+            /* Values-sivu: Grid layout - teksti ylös, ympyrät alas */
+            .main-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: minmax(0, 40vh) 1fr;
+                gap: 15px;
+                height: calc(100vh - 60px);
+                padding: 0 10px;
             }
 
             .back-nav {
-                position: absolute;
                 top: 15px;
                 left: 15px;
-                z-index: 100;
             }
 
-            .main-content {
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-                width: 100%;
-                padding-top: 50px;
-            }
-            
-            /* 3. YLÄOSA: TEKSTI (Kiinteä max-korkeus) */
+            /* TEKSTILAATIKKO - yläruudukko */
             .content-area {
-                flex: 0 0 auto;
-                height: 35vh; /* Kiinteä korkeus varmuuden vuoksi */
-                max-height: 35vh;
-                margin: 0 15px;
-                padding: 20px;
+                grid-row: 1;
                 overflow-y: auto;
-                z-index: 50;
-                background: rgba(255, 255, 255, 0.95);
-                border-radius: 15px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            }
-            
-            .content-area.initial-state {
-                padding: 20px;
+                padding: 18px 15px;
             }
 
-            /* 4. ALAOSA: YMPYRÄT (Ehdottomasti vie tilaa) */
+            /* YMPYRÄT - alaruudukko */
             .orbit-system {
-                display: block; /* Varmistetaan block-käytös */
-                flex: 1;
+                grid-row: 2;
                 width: 100%;
-                position: relative;
-                overflow: visible; /* ÄLÄ piilota palloja */
-                z-index: 10;
-                margin-top: 10px;
+                max-width: none;
+                height: 100%;
             }
-            
+
+            /* Piilotetaan desktop-ympyrä */
             .orbit-circle-bg {
                 display: none;
             }
-            
-            /* 5. PALLOJEN ASEMOINTI */
-            
-            /* Keskipallo */
+
+            /* Pallojen koot */
             .node.center {
-                position: absolute;
-                top: 40%; /* Hieman ylempänä alaosan sisällä */
-                left: 50%;
-                transform: translate(-50%, -50%);
-                margin: 0;
                 width: 120px;
                 height: 120px;
-                font-size: 0.9rem;
             }
 
-            /* Yläpallo */
-            .pos-1 { 
-                top: 5%; 
-                left: 50%; 
-                transform: translateX(-50%);
-                margin: 0;
-                right: auto;
-                bottom: auto;
-            }
-
-            /* Oikea alapallo */
-            .pos-2 { 
-                top: 65%;
-                right: 10%;
-                left: auto;
-                bottom: auto;
-                margin: 0;
-            }
-
-            /* Vasen alapallo */
-            .pos-3 { 
-                top: 65%;
-                left: 10%; 
-                right: auto;
-                bottom: auto;
-                margin: 0;
-            }
-
-            /* Koot */
             .node.satellite {
                 width: 95px;
                 height: 95px;
-                font-size: 0.7rem;
             }
 
+            /* Pallojen sijainnit */
+            .pos-1 {
+                top: 8%;
+                left: 50%;
+                margin-left: -47px;
+            }
+
+            .pos-2 {
+                bottom: 20%;
+                right: 8%;
+            }
+
+            .pos-3 {
+                bottom: 20%;
+                left: 8%;
+            }
+
+            /* Fonttikoot */
             .node.center .node-letter { font-size: 3rem; }
             .node.satellite .node-letter { font-size: 2.2rem; }
-            
-            .node.center .node-text { font-size: 0.85rem; padding: 0 5px; }
-            .node.satellite .node-text { font-size: 0.7rem; padding: 0 4px; }
+            .node.center .node-text { font-size: 0.85rem; line-height: 1.2; padding: 0 6px; }
+            .node.satellite .node-text { font-size: 0.7rem; line-height: 1.2; padding: 0 5px; }
 
-            /* Nuoli */
-            .arrow-hint svg { transform: rotate(0deg) !important; }
-            .arrow-hint:hover svg { transform: scale(1.15) !important; }
+            /* Nuoli alaspäin */
+            .arrow-hint svg {
+                transform: rotate(0deg) !important;
+            }
 
-            /* Typografia */
-            .intro-title { font-size: 1.6rem; line-height: 1.2; }
-            .intro-subtitle { font-size: 0.95rem; line-height: 1.5; }
+            .arrow-hint:hover svg {
+                transform: scale(1.15) !important;
+            }
+
+            /* Sisältöalueen typografia */
             h2 { font-size: 1.35rem; }
             .content-body { font-size: 0.95rem; line-height: 1.6; }
             .content-number { font-size: 2.2rem; }
