@@ -479,15 +479,33 @@
             .main-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
+                display: flex;
+                flex-direction: column;
             }
+
+            /* Tekstilaatikko ylös, ympyrät alas */
+            .content-area {
+                order: 1;
+            }
+
+            .orbit-system {
+                order: 2;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
             .wrapper {
                 padding: 60px 15px 30px;
                 justify-content: flex-start;
             }
 
-            .orbit-system {
-                max-width: 400px;
-                margin: 0 auto;
+            /* Nuoli alaspäin mobiilinäkymässä */
+            .arrow-hint svg {
+                transform: rotate(0deg) !important;
+            }
+
+            .arrow-hint:hover svg {
+                transform: scale(1.15) !important;
             }
 
             .node.center {
