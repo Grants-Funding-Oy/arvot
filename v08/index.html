@@ -461,6 +461,19 @@
         }
 
         @media (max-width: 768px) {
+            /* Lukitse korkeus, estä scrollaus */
+            body {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100vh;
+            }
+
+            body.state-intro {
+                overflow: auto;
+                position: relative;
+            }
+
             .back-nav {
                 top: 15px;
                 left: 15px;
@@ -476,40 +489,42 @@
                 line-height: 1.5;
             }
 
-            /* Wrapper: mahduta kaikki yhteen näkymään */
+            /* Wrapper: täytä koko näyttö */
             .wrapper {
-                padding: 55px 15px 20px;
+                padding: 50px 10px 15px;
+                height: 100vh;
                 min-height: 100vh;
                 max-height: 100vh;
-                justify-content: space-between;
+                overflow: hidden;
             }
 
             .main-content {
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr;
-                gap: 20px;
+                gap: 15px;
+                height: calc(100vh - 65px);
                 align-items: center;
-                max-height: calc(100vh - 75px);
             }
 
             /* Tekstilaatikko ylös */
             .content-area {
                 grid-row: 1;
-                padding: 20px 15px;
-                max-height: 40vh;
+                padding: 18px 12px;
+                max-height: 35vh;
                 overflow-y: auto;
             }
 
             .content-area.initial-state {
-                padding: 25px 15px;
+                padding: 22px 12px;
             }
 
-            /* Ympyrät alas */
+            /* Ympyrät alas - enemmän leveyttä */
             .orbit-system {
                 grid-row: 2;
-                max-width: 340px;
-                max-height: 340px;
+                max-width: 90vw;
+                width: 90vw;
+                max-height: 55vh;
                 margin: 0 auto;
             }
 
@@ -523,51 +538,51 @@
             }
 
             .node.center {
-                width: 115px;
-                height: 115px;
-                font-size: 0.9rem;
+                width: 135px;
+                height: 135px;
+                font-size: 0.95rem;
             }
 
             .node.center .node-letter {
-                font-size: 3rem;
+                font-size: 3.3rem;
             }
 
             .node.center .node-text {
-                font-size: 0.85rem;
-                line-height: 1.2;
-                padding: 0 6px;
+                font-size: 0.9rem;
+                line-height: 1.25;
+                padding: 0 8px;
             }
 
             .node.satellite {
-                width: 95px;
-                height: 95px;
-                font-size: 0.7rem;
+                width: 110px;
+                height: 110px;
+                font-size: 0.75rem;
             }
 
             .node.satellite .node-letter {
-                font-size: 2rem;
+                font-size: 2.3rem;
             }
 
             .node.satellite .node-text {
-                font-size: 0.7rem;
-                line-height: 1.2;
-                padding: 0 5px;
+                font-size: 0.75rem;
+                line-height: 1.25;
+                padding: 0 6px;
             }
             
             .pos-1 { 
                 top: 5%; 
                 left: 50%; 
-                margin-left: -47px; 
+                margin-left: -55px; 
             }
 
             .pos-2 { 
                 bottom: 22%; 
-                right: 8%; 
+                right: 5%; 
             }
 
             .pos-3 { 
                 bottom: 22%; 
-                left: 8%; 
+                left: 5%; 
             }
 
             h2 {
