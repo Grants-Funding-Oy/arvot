@@ -9,6 +9,9 @@
             --primary-color: #007871;
             --primary-dark: #005c57;
             --secondary-color: #5c3a66;
+            --grants-purple: #482e51;
+            --grants-turquoise: #007871;
+            --grants-beige: #e0d6c4;
             --bg-color: #f8f9fa;
             --text-main: #1a1a1a;
             --text-muted: #555;
@@ -92,7 +95,7 @@
             font-size: 2.6rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            color: var(--text-main);
+            color: var(--grants-purple);
             letter-spacing: -0.02em;
             line-height: 1.25;
             max-width: 900px;
@@ -108,6 +111,11 @@
             line-height: 1.5;
         }
 
+        .intro-subtitle strong {
+            color: var(--grants-turquoise);
+            font-weight: 700;
+        }
+
         .intro-indicator {
             margin-top: 50px;
             display: flex;
@@ -119,7 +127,7 @@
         .intro-indicator svg {
             width: 32px;
             height: 32px;
-            fill: var(--primary-color);
+            fill: var(--grants-turquoise);
         }
 
         @keyframes bounce {
@@ -156,7 +164,7 @@
         }
 
         .back-nav:hover {
-            color: var(--primary-color);
+            color: var(--grants-turquoise);
         }
 
         .back-nav svg {
@@ -214,7 +222,7 @@
             transform: translate(-50%, -50%);
             width: 60%;
             height: 60%;
-            border: 2px dashed rgba(0, 120, 113, 0.15);
+            border: 2px dashed rgba(72, 46, 81, 0.12);
             border-radius: 50%;
             transition: opacity 1s ease;
         }
@@ -261,40 +269,55 @@
         }
 
         @keyframes subtlePulse {
-            0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-            50% { box-shadow: 0 4px 16px rgba(0, 120, 113, 0.15); }
+            0%, 100% { 
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            }
+            50% { 
+                box-shadow: 0 4px 16px rgba(72, 46, 81, 0.2);
+            }
         }
         
         .node.center {
             width: var(--center-node-size);
             height: var(--center-node-size);
-            background: linear-gradient(135deg, #fff, #f0f0f0);
-            color: var(--text-main);
+            background: var(--grants-beige);
+            color: var(--grants-purple);
             font-size: 1.1rem;
             border: 4px solid white;
         }
         
         .node.center.active {
-            background: var(--text-main);
+            background: var(--grants-purple);
             color: white;
-            border-color: var(--text-main);
+            border-color: var(--grants-purple);
             transform: scale(1.1) !important;
+        }
+
+        .node.center.opened {
+            background: var(--grants-purple);
+            color: white;
+            border-color: var(--grants-purple);
         }
 
         .node.satellite {
             width: var(--satellite-node-size);
             height: var(--satellite-node-size);
-            background: white;
-            color: var(--text-muted);
+            background: var(--grants-beige);
+            color: var(--grants-purple);
             font-size: 0.85rem;
         }
 
         .node.satellite.active {
-            background: var(--primary-color);
+            background: var(--grants-turquoise);
             color: white;
             transform: scale(1.1) !important;
-            border-color: var(--primary-color);
+            border-color: var(--grants-turquoise);
             box-shadow: 0 10px 25px rgba(0, 120, 113, 0.3);
+        }
+
+        .node.satellite.opened {
+            background: var(--grants-turquoise);
+            color: white;
         }
 
         /* Joulukalenteri-tyyli: alussa vain kirjaimet */
@@ -336,6 +359,7 @@
             border-radius: 24px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.04);
             border: 1px solid rgba(0,0,0,0.03);
+            border-left: 4px solid transparent;
             min-height: 300px;
             display: flex;
             flex-direction: column;
@@ -344,7 +368,11 @@
             overflow: hidden;
             opacity: 0;
             transform: translateX(20px);
-            transition: all 0.8s ease 0.8s;
+            transition: all 0.8s ease 0.8s, border-left 0.3s ease;
+        }
+
+        body.state-values .content-area:has(.content-item.active:not(#content-initial)) {
+            border-left-color: var(--grants-turquoise);
         }
 
         body.state-values .content-area {
@@ -371,7 +399,7 @@
         .content-number {
             font-size: 3rem;
             font-weight: 900;
-            color: rgba(0, 120, 113, 0.1);
+            color: rgba(72, 46, 81, 0.08);
             line-height: 1;
         }
 
@@ -388,7 +416,7 @@
         }
         
         .content-body strong {
-            color: var(--primary-color);
+            color: var(--grants-turquoise);
             font-weight: 600;
         }
 
@@ -458,18 +486,24 @@
             
             .mobile-btn {
                 padding: 10px 20px;
-                background: white;
-                border: 1px solid #eee;
+                background: var(--grants-beige);
+                border: 1px solid var(--grants-beige);
                 border-radius: 20px;
                 font-weight: 600;
                 font-size: 0.9rem;
-                color: var(--text-muted);
+                color: var(--grants-purple);
             }
             
             .mobile-btn.active {
-                background: var(--primary-color);
+                background: var(--grants-turquoise);
                 color: white;
-                border-color: var(--primary-color);
+                border-color: var(--grants-turquoise);
+            }
+
+            .mobile-btn.opened {
+                background: var(--grants-turquoise);
+                color: white;
+                border-color: var(--grants-turquoise);
             }
 
             /* Joulukalenteri mobile-napeille */
@@ -584,9 +618,9 @@
                     <!-- Initial content: Grantsin arvot -->
                     <div id="content-initial" class="content-item active">
                         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 250px;">
-                            <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 30px; letter-spacing: -0.02em;">Grantsin arvot</h2>
-                            <div style="opacity: 0.3;">
-                                <svg viewBox="0 0 24 24" style="width: 48px; height: 48px; fill: var(--primary-color); transform: rotate(90deg);">
+                            <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--grants-purple); margin-bottom: 30px; letter-spacing: -0.02em;">Grantsin arvot</h2>
+                            <div style="opacity: 0.4;">
+                                <svg viewBox="0 0 24 24" style="width: 48px; height: 48px; fill: var(--grants-turquoise); transform: rotate(90deg);">
                                     <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
                                 </svg>
                             </div>
