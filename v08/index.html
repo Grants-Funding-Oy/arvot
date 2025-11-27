@@ -461,17 +461,16 @@
         }
 
         @media (max-width: 768px) {
-            /* Lukitse korkeus, estä scrollaus */
+            /* Estä scrollaus, mutta salli pull-to-refresh */
             body {
                 overflow: hidden;
-                position: fixed;
+                overscroll-behavior: none;
                 width: 100%;
                 height: 100vh;
             }
 
             body.state-intro {
                 overflow: auto;
-                position: relative;
             }
 
             .back-nav {
@@ -491,7 +490,7 @@
 
             /* Wrapper: täytä koko näyttö */
             .wrapper {
-                padding: 50px 10px 15px;
+                padding: 50px 10px 10px;
                 height: 100vh;
                 min-height: 100vh;
                 max-height: 100vh;
@@ -502,16 +501,16 @@
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr;
-                gap: 15px;
-                height: calc(100vh - 65px);
-                align-items: center;
+                gap: 5px;
+                height: calc(100vh - 60px);
+                align-items: start;
             }
 
             /* Tekstilaatikko ylös */
             .content-area {
                 grid-row: 1;
                 padding: 18px 12px;
-                max-height: 35vh;
+                max-height: 32vh;
                 overflow-y: auto;
             }
 
@@ -519,13 +518,14 @@
                 padding: 22px 12px;
             }
 
-            /* Ympyrät alas - enemmän leveyttä */
+            /* Ympyrät alas - enemmän leveyttä, lähempänä tekstiä */
             .orbit-system {
                 grid-row: 2;
                 max-width: 90vw;
                 width: 90vw;
-                max-height: 55vh;
+                max-height: calc(100vh - 32vh - 60px);
                 margin: 0 auto;
+                align-self: center;
             }
 
             /* Nuoli alaspäin */
