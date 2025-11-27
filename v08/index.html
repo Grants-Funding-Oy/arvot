@@ -462,8 +462,8 @@
 
         @media (max-width: 768px) {
             .back-nav {
-                top: 20px;
-                left: 20px;
+                top: 15px;
+                left: 15px;
             }
 
             .intro-title {
@@ -476,30 +476,44 @@
                 line-height: 1.5;
             }
 
+            /* Wrapper: mahduta kaikki yhteen näkymään */
+            .wrapper {
+                padding: 55px 15px 20px;
+                min-height: 100vh;
+                max-height: 100vh;
+                justify-content: space-between;
+            }
+
             .main-content {
+                display: grid;
                 grid-template-columns: 1fr;
-                gap: 30px;
-                display: flex;
-                flex-direction: column;
+                grid-template-rows: auto 1fr;
+                gap: 20px;
+                align-items: center;
+                max-height: calc(100vh - 75px);
             }
 
-            /* Tekstilaatikko ylös, ympyrät alas */
+            /* Tekstilaatikko ylös */
             .content-area {
-                order: 1;
+                grid-row: 1;
+                padding: 20px 15px;
+                max-height: 40vh;
+                overflow-y: auto;
             }
 
+            .content-area.initial-state {
+                padding: 25px 15px;
+            }
+
+            /* Ympyrät alas */
             .orbit-system {
-                order: 2;
-                max-width: 400px;
+                grid-row: 2;
+                max-width: 340px;
+                max-height: 340px;
                 margin: 0 auto;
             }
 
-            .wrapper {
-                padding: 60px 15px 30px;
-                justify-content: flex-start;
-            }
-
-            /* Nuoli alaspäin mobiilinäkymässä */
+            /* Nuoli alaspäin */
             .arrow-hint svg {
                 transform: rotate(0deg) !important;
             }
@@ -509,41 +523,41 @@
             }
 
             .node.center {
-                width: 130px;
-                height: 130px;
-                font-size: 0.95rem;
+                width: 115px;
+                height: 115px;
+                font-size: 0.9rem;
             }
 
             .node.center .node-letter {
-                font-size: 3.2rem;
+                font-size: 3rem;
             }
 
             .node.center .node-text {
-                font-size: 0.9rem;
-                line-height: 1.25;
-                padding: 0 8px;
+                font-size: 0.85rem;
+                line-height: 1.2;
+                padding: 0 6px;
             }
 
             .node.satellite {
-                width: 105px;
-                height: 105px;
-                font-size: 0.75rem;
+                width: 95px;
+                height: 95px;
+                font-size: 0.7rem;
             }
 
             .node.satellite .node-letter {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
 
             .node.satellite .node-text {
-                font-size: 0.75rem;
-                line-height: 1.25;
-                padding: 0 6px;
+                font-size: 0.7rem;
+                line-height: 1.2;
+                padding: 0 5px;
             }
             
             .pos-1 { 
                 top: 5%; 
                 left: 50%; 
-                margin-left: -52px; 
+                margin-left: -47px; 
             }
 
             .pos-2 { 
@@ -556,30 +570,22 @@
                 left: 8%; 
             }
 
-            .content-area {
-                padding: 25px 20px;
-            }
-
-            .content-area.initial-state {
-                padding: 30px 20px;
-            }
-
             h2 {
-                font-size: 1.5rem;
+                font-size: 1.35rem;
             }
 
             .content-body {
-                font-size: 1rem;
-                line-height: 1.65;
+                font-size: 0.95rem;
+                line-height: 1.6;
             }
 
             .content-number {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
 
             .content-header {
-                gap: 12px;
-                margin-bottom: 16px;
+                gap: 10px;
+                margin-bottom: 14px;
             }
         }
         
