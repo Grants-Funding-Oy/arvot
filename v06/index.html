@@ -298,6 +298,40 @@
             border-color: var(--primary-color);
             box-shadow: 0 10px 25px rgba(0, 120, 113, 0.3);
         }
+
+        /* Joulukalenteri-tyyli: alussa vain kirjaimet */
+        .node-letter {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+
+        .node-text {
+            display: none;
+            font-size: 0.85rem;
+            line-height: 1.3;
+        }
+
+        .node.center .node-text {
+            font-size: 1.1rem;
+        }
+
+        /* Kun ympyrä on avattu, näytä teksti ja piilota kirjain */
+        .node.opened .node-letter {
+            display: none;
+        }
+
+        .node.opened .node-text {
+            display: block;
+        }
+
+        /* Keskipallo avattu oletuksena */
+        .node.center .node-letter {
+            display: none;
+        }
+
+        .node.center .node-text {
+            display: block;
+        }
         
         .pos-1 { top: 5%; left: 50%; margin-left: -55px; }
         .pos-2 { bottom: 22%; right: 8%; } 
@@ -444,6 +478,24 @@
                 color: white;
                 border-color: var(--primary-color);
             }
+
+            /* Joulukalenteri mobile-napeille */
+            .mobile-btn .node-letter {
+                font-size: 1.2rem;
+                font-weight: 900;
+            }
+
+            .mobile-btn .node-text {
+                display: none;
+            }
+
+            .mobile-btn.opened .node-letter {
+                display: none;
+            }
+
+            .mobile-btn.opened .node-text {
+                display: inline;
+            }
         }
         
         @media (min-width: 501px) {
@@ -494,30 +546,46 @@
                         <div class="orbit-circle-bg"></div>
                         
                         <!-- Center -->
-                        <div class="node center active" onclick="activate(0)" data-id="0">
-                            ASIAKASARVO
+                        <div class="node center active opened" onclick="activate(0)" data-id="0">
+                            <span class="node-letter">A</span>
+                            <span class="node-text">ASIAKASARVO</span>
                         </div>
 
                         <!-- Satellites -->
                         <div class="node satellite pos-1" onclick="activate(3)" data-id="3">
-                            toistemme<br>tukeminen
+                            <span class="node-letter">T</span>
+                            <span class="node-text">toistemme<br>tukeminen</span>
                         </div>
 
                         <div class="node satellite pos-2" onclick="activate(1)" data-id="1">
-                            tehokas<br>tekeminen
+                            <span class="node-letter">T</span>
+                            <span class="node-text">tehokas<br>tekeminen</span>
                         </div>
 
                         <div class="node satellite pos-3" onclick="activate(2)" data-id="2">
-                            tAItojen<br>kehittäminen
+                            <span class="node-letter">T</span>
+                            <span class="node-text">tAItojen<br>kehittäminen</span>
                         </div>
                     </div>
 
                     <!-- Mobile Nav -->
                     <div class="mobile-nav">
-                        <div class="mobile-btn active" onclick="activate(0)" data-id="0">ASIAKASARVO</div>
-                        <div class="mobile-btn" onclick="activate(3)" data-id="3">toistemme tukeminen</div>
-                        <div class="mobile-btn" onclick="activate(1)" data-id="1">tehokas tekeminen</div>
-                        <div class="mobile-btn" onclick="activate(2)" data-id="2">tAItojen kehittäminen</div>
+                        <div class="mobile-btn active opened" onclick="activate(0)" data-id="0">
+                            <span class="node-letter">A</span>
+                            <span class="node-text">ASIAKASARVO</span>
+                        </div>
+                        <div class="mobile-btn" onclick="activate(3)" data-id="3">
+                            <span class="node-letter">T</span>
+                            <span class="node-text">toistemme tukeminen</span>
+                        </div>
+                        <div class="mobile-btn" onclick="activate(1)" data-id="1">
+                            <span class="node-letter">T</span>
+                            <span class="node-text">tehokas tekeminen</span>
+                        </div>
+                        <div class="mobile-btn" onclick="activate(2)" data-id="2">
+                            <span class="node-letter">T</span>
+                            <span class="node-text">tAItojen kehittäminen</span>
+                        </div>
                     </div>
                 </div>
 
@@ -607,10 +675,21 @@
             document.querySelectorAll('.content-item').forEach(el => el.classList.remove('active'));
 
             const nodes = document.querySelectorAll(`.node[data-id="${id}"]`);
-            nodes.forEach(n => n.classList.add('active'));
+            nodes.forEach(n => {
+                n.classList.add('active');
+                // Joulukalenteri: avaa ympyrä pysyvästi
+                if (!n.classList.contains('opened')) {
+                    n.classList.add('opened');
+                }
+            });
 
             const btns = document.querySelectorAll(`.mobile-btn[data-id="${id}"]`);
-            btns.forEach(b => b.classList.add('active'));
+            btns.forEach(b => {
+                b.classList.add('active');
+                if (!b.classList.contains('opened')) {
+                    b.classList.add('opened');
+                }
+            });
 
             const content = document.getElementById(`content-${id}`);
             if (content) content.classList.add('active');
