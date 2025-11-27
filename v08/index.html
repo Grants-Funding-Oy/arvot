@@ -461,167 +461,148 @@
         }
 
         @media (max-width: 768px) {
-            /* Resetoi overflow ja estä bounce */
+            /* 1. LUKITAAN NÄYTTÖ */
             html, body {
                 margin: 0;
                 padding: 0;
-                height: 100%;
-                overscroll-behavior-y: none;
-            }
-
-            body.state-values {
-                position: fixed;
                 width: 100%;
                 height: 100%;
-                overflow: hidden;
+                overflow: hidden !important; /* Pakota ei scrollia */
+                position: fixed; /* Estää kaiken heilumisen */
             }
             
             body.state-intro {
-                overflow: auto;
+                position: relative;
+                overflow: auto !important;
+                height: auto;
             }
 
-            /* Wrapper käyttää dynaamista viewport heightia */
+            /* 2. PÄÄRAKENNE: Flex-pylväs */
             body.state-values .wrapper {
-                height: 100vh; /* Fallback */
-                height: 100dvh;
-                width: 100%;
-                padding: 60px 15px 15px;
                 display: flex;
                 flex-direction: column;
+                height: 100%;
+                width: 100%;
+                padding: 0;
                 box-sizing: border-box;
-                overflow: hidden;
             }
 
             .back-nav {
                 position: absolute;
-                top: 20px;
-                left: 20px;
+                top: 15px;
+                left: 15px;
                 z-index: 100;
-            }
-
-            .intro-title {
-                font-size: 1.6rem;
-                line-height: 1.2;
-            }
-            
-            .intro-subtitle {
-                font-size: 0.95rem;
-                line-height: 1.5;
             }
 
             .main-content {
                 display: flex;
                 flex-direction: column;
-                width: 100%;
                 height: 100%;
-                gap: 10px;
-                position: relative;
+                width: 100%;
+                padding-top: 60px; /* Tilaa back-naville */
             }
             
-            /* TEKSTILAATIKKO YLHÄÄLLÄ */
+            /* 3. YLÄOSA: TEKSTI (Kiinteä max-korkeus) */
             .content-area {
-                flex: 0 0 auto;
-                max-height: 35%;
+                flex: 0 0 auto; /* Ei veny */
+                max-height: 35vh; /* Max 35% näytön korkeudesta */
+                margin: 0 15px 10px 15px;
+                padding: 20px;
                 overflow-y: auto;
-                z-index: 20;
+                z-index: 50; /* Teksti aina päällimmäisenä */
                 background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(5px);
-                /* Hienosäätöä */
-                margin-bottom: 10px;
+                border-radius: 15px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             }
             
             .content-area.initial-state {
-                padding: 20px 15px;
+                padding: 20px;
             }
 
-            /* PALLOT ALHAALLA - Vie lopputilan */
+            /* 4. ALAOSA: YMPYRÄT (Ottaa kaiken lopputilan) */
             .orbit-system {
-                flex: 1 1 auto;
+                flex: 1; /* Venyy täyttämään alaosan */
                 width: 100%;
+                max-width: none;
+                aspect-ratio: auto; /* Poista neliö-pakotus */
+                margin: 0;
                 position: relative;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 0;
+                overflow: hidden; /* Pitää pallot ruudussa */
                 z-index: 10;
             }
             
-            /* Nuoli alaspäin */
-            .arrow-hint svg {
-                transform: rotate(0deg) !important;
-            }
-
-            .arrow-hint:hover svg {
-                transform: scale(1.15) !important;
+            /* Piilota katkoviiva-ympyrä mobiilissa, koska muoto ei ole neliö */
+            .orbit-circle-bg {
+                display: none;
             }
             
-            /* Pallot hieman pienennetty turvallisuuden vuoksi */
+            /* 5. PALLOJEN ASEMOINTI ALAOSAN SISÄLLÄ */
+            
+            /* Keskipallo: Aina alaosan keskellä */
             .node.center {
-                width: 125px;
-                height: 125px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(1);
+                margin: 0;
+                width: 120px;
+                height: 120px;
                 font-size: 0.9rem;
             }
 
-            .node.center .node-letter {
-                font-size: 3rem;
-            }
-
-            .node.center .node-text {
-                font-size: 0.85rem;
-                line-height: 1.2;
-                padding: 0 6px;
-            }
-
-            .node.satellite {
-                width: 100px;
-                height: 100px;
-                font-size: 0.7rem;
-            }
-
-            .node.satellite .node-letter {
-                font-size: 2.2rem;
-            }
-
-            .node.satellite .node-text {
-                font-size: 0.7rem;
-                line-height: 1.2;
-                padding: 0 5px;
-            }
-            
-            /* Asemointi suhteessa orbit-alueeseen */
+            /* Yläpallo: Alaosan yläreunassa */
             .pos-1 { 
                 top: 5%; 
                 left: 50%; 
-                margin-left: -50px; 
+                transform: translateX(-50%);
+                margin: 0;
+                right: auto;
+                bottom: auto;
             }
 
+            /* Oikea alapallo */
             .pos-2 { 
-                bottom: 20%; 
-                right: 5%; 
+                bottom: 15%; 
+                right: 10%;
+                left: auto;
+                top: auto;
+                margin: 0;
             }
 
+            /* Vasen alapallo */
             .pos-3 { 
-                bottom: 20%; 
-                left: 5%; 
+                bottom: 15%; 
+                left: 10%; 
+                right: auto;
+                top: auto;
+                margin: 0;
             }
 
-            h2 {
-                font-size: 1.35rem;
+            /* Satelliittien koko */
+            .node.satellite {
+                width: 95px;
+                height: 95px;
+                font-size: 0.7rem;
             }
 
-            .content-body {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
+            /* Tekstien koot */
+            .node.center .node-letter { font-size: 3rem; }
+            .node.satellite .node-letter { font-size: 2.2rem; }
+            
+            .node.center .node-text { font-size: 0.85rem; padding: 0 5px; }
+            .node.satellite .node-text { font-size: 0.7rem; padding: 0 4px; }
 
-            .content-number {
-                font-size: 2.2rem;
-            }
+            /* Nuoli */
+            .arrow-hint svg { transform: rotate(0deg) !important; }
+            .arrow-hint:hover svg { transform: scale(1.15) !important; }
 
-            .content-header {
-                gap: 10px;
-                margin-bottom: 14px;
-            }
+            /* Muut typografiat */
+            .intro-title { font-size: 1.6rem; line-height: 1.2; }
+            .intro-subtitle { font-size: 0.95rem; line-height: 1.5; }
+            h2 { font-size: 1.35rem; }
+            .content-body { font-size: 0.95rem; line-height: 1.6; }
+            .content-number { font-size: 2.2rem; }
+            .content-header { gap: 10px; margin-bottom: 14px; }
         }
         
         .mobile-nav { 
