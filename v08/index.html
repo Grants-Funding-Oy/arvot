@@ -460,12 +460,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 850px) {
-            .wrapper {
-                justify-content: flex-start;
-                padding-top: 80px;
-            }
-            
+        @media (max-width: 768px) {
             .back-nav {
                 top: 20px;
                 left: 20px;
@@ -483,67 +478,54 @@
 
             .main-content {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 30px;
+            }
+            .wrapper {
+                padding: 60px 15px 30px;
+                justify-content: flex-start;
             }
 
             .orbit-system {
-                max-width: 350px;
+                max-width: 400px;
+                margin: 0 auto;
             }
 
             .node.center {
-                width: 110px;
-                height: 110px;
-                font-size: 0.9rem;
-            }
-
-            .node.satellite {
-                width: 90px;
-                height: 90px;
-                font-size: 0.8rem;
-                margin: 0;
-            }
-            
-            .pos-1 { margin-left: -45px; }
-        }
-
-        @media (max-width: 500px) {
-            .orbit-system {
-                max-width: 280px;
-            }
-
-            .node.center {
-                width: 90px;
-                height: 90px;
-                font-size: 0.85rem;
+                width: 130px;
+                height: 130px;
+                font-size: 0.95rem;
             }
 
             .node.center .node-letter {
-                font-size: 2.8rem;
-            }
-
-            .node.satellite {
-                width: 70px;
-                height: 70px;
-                font-size: 0.7rem;
-            }
-
-            .node-letter {
-                font-size: 2rem !important;
+                font-size: 3.2rem;
             }
 
             .node.center .node-text {
-                font-size: 0.85rem;
+                font-size: 0.9rem;
+                line-height: 1.25;
+                padding: 0 8px;
+            }
+
+            .node.satellite {
+                width: 105px;
+                height: 105px;
+                font-size: 0.75rem;
+            }
+
+            .node.satellite .node-letter {
+                font-size: 2.2rem;
             }
 
             .node.satellite .node-text {
-                font-size: 0.65rem;
-                line-height: 1.2;
+                font-size: 0.75rem;
+                line-height: 1.25;
+                padding: 0 6px;
             }
             
             .pos-1 { 
                 top: 5%; 
                 left: 50%; 
-                margin-left: -35px; 
+                margin-left: -52px; 
             }
 
             .pos-2 { 
@@ -557,19 +539,29 @@
             }
 
             .content-area {
+                padding: 25px 20px;
+            }
+
+            .content-area.initial-state {
                 padding: 30px 20px;
             }
 
             h2 {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
 
             .content-body {
                 font-size: 1rem;
+                line-height: 1.65;
             }
 
             .content-number {
                 font-size: 2.5rem;
+            }
+
+            .content-header {
+                gap: 12px;
+                margin-bottom: 16px;
             }
         }
         
