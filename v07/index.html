@@ -276,6 +276,33 @@
                 box-shadow: 0 4px 16px rgba(72, 46, 81, 0.2);
             }
         }
+
+        /* Vahvempi pulse kun nuolta on klikattu */
+        body.hint-activated .node:not(.opened) {
+            animation: strongPulse 1.5s ease-in-out 3;
+        }
+
+        @keyframes strongPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            }
+            50% { 
+                transform: scale(1.08);
+                box-shadow: 0 6px 24px rgba(72, 46, 81, 0.4);
+            }
+        }
+
+        /* Klikattava nuoli */
+        .arrow-hint {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .arrow-hint:hover {
+            opacity: 0.7 !important;
+            transform: rotate(90deg) scale(1.1);
+        }
         
         .node.center {
             width: var(--center-node-size);
@@ -619,7 +646,7 @@
                     <div id="content-initial" class="content-item active">
                         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 250px;">
                             <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--grants-purple); margin-bottom: 30px; letter-spacing: -0.02em;">Grantsin arvot</h2>
-                            <div style="opacity: 0.4;">
+                            <div class="arrow-hint" onclick="hintCircles()" style="opacity: 0.4;">
                                 <svg viewBox="0 0 24 24" style="width: 48px; height: 48px; fill: var(--grants-turquoise); transform: rotate(90deg);">
                                     <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
                                 </svg>
@@ -728,6 +755,14 @@
 
             const content = document.getElementById(`content-${id}`);
             if (content) content.classList.add('active');
+        }
+
+        function hintCircles() {
+            document.body.classList.add('hint-activated');
+            // Poista luokka 4.5 sekunnin kuluttua (3 x 1.5s animaatio)
+            setTimeout(() => {
+                document.body.classList.remove('hint-activated');
+            }, 4500);
         }
 
         // Scroll detection for intro -> values transition
