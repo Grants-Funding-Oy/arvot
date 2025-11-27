@@ -305,6 +305,10 @@
             font-weight: 900;
         }
 
+        .node.center .node-letter {
+            font-size: 3.5rem;
+        }
+
         .node-text {
             display: none;
             font-size: 0.85rem;
@@ -321,15 +325,6 @@
         }
 
         .node.opened .node-text {
-            display: block;
-        }
-
-        /* Keskipallo avattu oletuksena */
-        .node.center .node-letter {
-            display: none;
-        }
-
-        .node.center .node-text {
             display: block;
         }
         
@@ -546,7 +541,7 @@
                         <div class="orbit-circle-bg"></div>
                         
                         <!-- Center -->
-                        <div class="node center active opened" onclick="activate(0)" data-id="0">
+                        <div class="node center active" onclick="activate(0)" data-id="0">
                             <span class="node-letter">A</span>
                             <span class="node-text">ASIAKASARVO</span>
                         </div>
@@ -570,7 +565,7 @@
 
                     <!-- Mobile Nav -->
                     <div class="mobile-nav">
-                        <div class="mobile-btn active opened" onclick="activate(0)" data-id="0">
+                        <div class="mobile-btn active" onclick="activate(0)" data-id="0">
                             <span class="node-letter">A</span>
                             <span class="node-text">ASIAKASARVO</span>
                         </div>
