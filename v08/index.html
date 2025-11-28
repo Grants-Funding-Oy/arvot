@@ -383,6 +383,16 @@
         .node.opened .node-text {
             display: block;
         }
+
+        /* AI-korostus: Turkoosi suljetussa, valkoinen avatussa */
+        .ai-highlight {
+            color: var(--grants-turquoise);
+        }
+
+        .node.opened .ai-highlight,
+        .mobile-btn.opened .ai-highlight {
+            color: white;
+        }
         
         .pos-1 { top: 5%; left: 50%; margin-left: -55px; }
         .pos-2 { bottom: 22%; right: 8%; } 
@@ -642,7 +652,7 @@
 
                         <div class="node satellite pos-3" onclick="activate(2)" data-id="2">
                             <span class="node-letter">T</span>
-                            <span class="node-text">t<span style="color: var(--grants-turquoise);">AI</span>tojen<br>kehittäminen</span>
+                            <span class="node-text">t<span class="ai-highlight">AI</span>tojen<br>kehittäminen</span>
                         </div>
                     </div>
 
@@ -662,7 +672,7 @@
                         </div>
                         <div class="mobile-btn" onclick="activate(2)" data-id="2">
                             <span class="node-letter">T</span>
-                            <span class="node-text">t<span style="color: var(--grants-turquoise);">AI</span>tojen kehittäminen</span>
+                            <span class="node-text">t<span class="ai-highlight">AI</span>tojen kehittäminen</span>
                         </div>
                     </div>
                 </div>
@@ -708,7 +718,7 @@
                     <div id="content-2" class="content-item">
                         <div class="content-header">
                             <span class="content-number">T</span>
-                            <h2>t<span style="color: var(--grants-turquoise);">AI</span>tojen kehittäminen</h2>
+                            <h2>t<span class="ai-highlight">AI</span>tojen kehittäminen</h2>
                         </div>
                         <div class="content-body">
                             <p>Kehitymme yksilöinä ja yrityksenä ottamalla uudet taidot ja teknologiat nopeasti käyttöön. <strong>AI on modernin työn keskeinen taito</strong>, ja varmistamme, että kaikki pysyvät mukana. Automatisoimme kaiken, mikä tehostaa työtä ja vie meitä eteenpäin.</p>
