@@ -742,23 +742,12 @@
     </div>
 
     <script>
-        let autoTimer;
         let hasScrolled = false;
-
-        function startTimer() {
-            if(autoTimer) clearTimeout(autoTimer);
-            autoTimer = setTimeout(() => {
-                if(document.body.classList.contains('state-intro')) {
-                    enterValues();
-                }
-            }, 20000);
-        }
 
         function enterValues() {
             console.log("Entering values view..."); // Debug
             document.body.classList.remove('state-intro');
             document.body.classList.add('state-values');
-            if(autoTimer) clearTimeout(autoTimer);
             hasScrolled = false;
         }
 
@@ -766,7 +755,6 @@
             console.log("Entering intro view..."); // Debug
             document.body.classList.remove('state-values');
             document.body.classList.add('state-intro');
-            startTimer();
             hasScrolled = false;
         }
 
@@ -828,8 +816,6 @@
                 }
             }
         });
-
-        window.onload = startTimer;
     </script>
 </body>
 </html>
