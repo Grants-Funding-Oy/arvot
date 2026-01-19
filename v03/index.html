@@ -9,9 +9,6 @@
             --primary-color: #007871;
             --primary-dark: #005c57;
             --secondary-color: #5c3a66;
-            --grants-purple: #482e51;
-            --grants-turquoise: #007871;
-            --grants-beige: #e0d6c4;
             --bg-color: #f8f9fa;
             --text-main: #1a1a1a;
             --text-muted: #555;
@@ -95,7 +92,7 @@
             font-size: 2.6rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            color: var(--grants-purple);
+            color: var(--text-main);
             letter-spacing: -0.02em;
             line-height: 1.25;
             max-width: 900px;
@@ -111,11 +108,6 @@
             line-height: 1.5;
         }
 
-        .intro-subtitle strong {
-            color: var(--grants-turquoise);
-            font-weight: 700;
-        }
-
         .intro-indicator {
             margin-top: 50px;
             display: flex;
@@ -127,7 +119,7 @@
         .intro-indicator svg {
             width: 32px;
             height: 32px;
-            fill: var(--grants-turquoise);
+            fill: var(--primary-color);
         }
 
         @keyframes bounce {
@@ -164,7 +156,7 @@
         }
 
         .back-nav:hover {
-            color: var(--grants-turquoise);
+            color: var(--primary-color);
         }
 
         .back-nav svg {
@@ -197,6 +189,18 @@
             transition-delay: 0.4s;
         }
 
+        .values-header {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 40px;
+        }
+
+        .values-header h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -222,7 +226,7 @@
             transform: translate(-50%, -50%);
             width: 60%;
             height: 60%;
-            border: 2px dashed rgba(72, 46, 81, 0.12);
+            border: 2px dashed rgba(0, 120, 113, 0.15);
             border-radius: 50%;
             transition: opacity 1s ease;
         }
@@ -262,136 +266,37 @@
             z-index: 10;
             transition-delay: 0s !important;
         }
-
-        /* Hienovarainen vihjaus suljetuille ympyröille */
-        .node:not(.opened) {
-            animation: subtlePulse 3s ease-in-out infinite;
-        }
-
-        @keyframes subtlePulse {
-            0%, 100% { 
-                box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-            }
-            50% { 
-                box-shadow: 0 4px 16px rgba(72, 46, 81, 0.2);
-            }
-        }
-
-        /* Vahvempi pulse kun nuolta on klikattu */
-        body.hint-activated .node:not(.opened) {
-            animation: strongPulse 1.5s ease-in-out 3;
-        }
-
-        @keyframes strongPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-            }
-            50% { 
-                transform: scale(1.08);
-                box-shadow: 0 6px 24px rgba(72, 46, 81, 0.4);
-            }
-        }
-
-        /* Klikattava nuoli */
-        .arrow-hint {
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
-
-        .arrow-hint svg {
-            transform: rotate(180deg);
-            transition: all 0.4s ease;
-        }
-
-        .arrow-hint:hover {
-            opacity: 0.7 !important;
-        }
-
-        .arrow-hint:hover svg {
-            transform: rotate(90deg) scale(1.15);
-        }
         
         .node.center {
             width: var(--center-node-size);
             height: var(--center-node-size);
-            background: var(--grants-beige);
-            color: var(--grants-purple);
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            color: var(--text-main);
             font-size: 1.1rem;
             border: 4px solid white;
         }
         
         .node.center.active {
-            background: var(--grants-purple);
+            background: var(--text-main);
             color: white;
-            border-color: var(--grants-purple);
+            border-color: var(--text-main);
             transform: scale(1.1) !important;
-        }
-
-        .node.center.opened {
-            background: var(--grants-purple);
-            color: white;
-            border-color: var(--grants-purple);
         }
 
         .node.satellite {
             width: var(--satellite-node-size);
             height: var(--satellite-node-size);
-            background: var(--grants-beige);
-            color: var(--grants-purple);
+            background: white;
+            color: var(--text-muted);
             font-size: 0.85rem;
         }
 
         .node.satellite.active {
-            background: var(--grants-turquoise);
+            background: var(--primary-color);
             color: white;
             transform: scale(1.1) !important;
-            border-color: var(--grants-turquoise);
+            border-color: var(--primary-color);
             box-shadow: 0 10px 25px rgba(0, 120, 113, 0.3);
-        }
-
-        .node.satellite.opened {
-            background: var(--grants-turquoise);
-            color: white;
-        }
-
-        /* Joulukalenteri-tyyli: alussa vain kirjaimet */
-        .node-letter {
-            font-size: 2.5rem;
-            font-weight: 900;
-        }
-
-        .node.center .node-letter {
-            font-size: 3.5rem;
-        }
-
-        .node-text {
-            display: none;
-            font-size: 0.85rem;
-            line-height: 1.3;
-        }
-
-        .node.center .node-text {
-            font-size: 1.1rem;
-        }
-
-        /* Kun ympyrä on avattu, näytä teksti ja piilota kirjain */
-        .node.opened .node-letter {
-            display: none;
-        }
-
-        .node.opened .node-text {
-            display: block;
-        }
-
-        /* AI-korostus: Turkoosi suljetussa, valkoinen avatussa */
-        .ai-highlight {
-            color: var(--grants-turquoise);
-        }
-
-        .node.opened .ai-highlight,
-        .mobile-btn.opened .ai-highlight {
-            color: white;
         }
         
         .pos-1 { top: 5%; left: 50%; margin-left: -55px; }
@@ -404,7 +309,6 @@
             border-radius: 24px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.04);
             border: 1px solid rgba(0,0,0,0.03);
-            border-left: 4px solid transparent;
             min-height: 300px;
             display: flex;
             flex-direction: column;
@@ -413,11 +317,7 @@
             overflow: hidden;
             opacity: 0;
             transform: translateX(20px);
-            transition: all 0.8s ease 0.8s, border-left 0.3s ease;
-        }
-
-        body.state-values .content-area:has(.content-item.active:not(#content-initial)) {
-            border-left-color: var(--grants-turquoise);
+            transition: all 0.8s ease 0.8s;
         }
 
         body.state-values .content-area {
@@ -444,7 +344,7 @@
         .content-number {
             font-size: 3rem;
             font-weight: 900;
-            color: rgba(72, 46, 81, 0.08);
+            color: rgba(0, 120, 113, 0.1);
             line-height: 1;
         }
 
@@ -461,7 +361,7 @@
         }
         
         .content-body strong {
-            color: var(--grants-turquoise);
+            color: var(--primary-color);
             font-weight: 600;
         }
 
@@ -470,21 +370,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 768px) {
-            /* === MOBIILINÄKYMÄ - LUKITTU, EI SCROLLIA === */
-            
-            /* Lukitse values-näkymä */
-            body.state-values {
-                position: fixed;
-                width: 100%;
-                height: 100vh;
-                overflow: hidden;
+        @media (max-width: 850px) {
+            .wrapper {
+                justify-content: flex-start;
+                padding-top: 80px;
             }
-
-            /* Intro-sivu normaalisti scrollattava */
-            body.state-intro {
-                position: static;
-                overflow: auto;
+            
+            .back-nav {
+                top: 20px;
+                left: 20px;
             }
 
             .intro-title {
@@ -497,101 +391,63 @@
                 line-height: 1.5;
             }
 
-            /* Wrapper täyttää näytön */
-            body.state-values .wrapper {
-                height: 100vh;
-                padding: 55px 15px 10px;
-                overflow: hidden;
-            }
-
-            /* Grid layout - teksti ylös, ympyrät alas */
             .main-content {
                 grid-template-columns: 1fr;
-                grid-template-rows: minmax(0, 35vh) 1fr;
-                gap: 10px;
-                height: 100%;
-                overflow: hidden;
+                gap: 40px;
             }
 
-            .back-nav {
-                top: 15px;
-                left: 15px;
-            }
-
-            /* TEKSTILAATIKKO - yläruudukko, scrollattava sisällä */
-            .content-area {
-                grid-row: 1;
-                overflow-y: auto;
-                padding: 18px 15px;
-                margin-top: 10px; /* Ylätila pyöristyksille */
-            }
-
-            /* YMPYRÄT - alaruudukko */
             .orbit-system {
-                grid-row: 2;
-                width: 100%;
-                max-width: none;
-                height: 100%;
-                overflow: hidden;
+                max-width: 350px;
             }
 
-            /* Piilotetaan desktop-ympyrä */
-            .orbit-circle-bg {
-                display: none;
-            }
-
-            /* Pallojen koot */
             .node.center {
-                width: 120px;
-                height: 120px;
+                width: 110px;
+                height: 110px;
+                font-size: 0.9rem;
             }
 
             .node.satellite {
-                width: 95px;
-                height: 95px;
+                width: 90px;
+                height: 90px;
+                font-size: 0.8rem;
+                margin: 0;
             }
+            
+            .pos-1 { margin-left: -45px; }
+        }
 
-            /* Pallojen sijainnit */
-            .pos-1 {
-                top: 8%;
-                left: 50%;
-                margin-left: -47px;
+        @media (max-width: 500px) {
+            .orbit-system {
+                display: none;
             }
-
-            .pos-2 {
-                bottom: 20%;
-                right: 8%;
+            
+            .mobile-nav {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 20px;
             }
-
-            .pos-3 {
-                bottom: 20%;
-                left: 8%;
+            
+            .mobile-btn {
+                padding: 10px 20px;
+                background: white;
+                border: 1px solid #eee;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                color: var(--text-muted);
             }
-
-            /* Fonttikoot */
-            .node.center .node-letter { font-size: 3rem; }
-            .node.satellite .node-letter { font-size: 2.2rem; }
-            .node.center .node-text { font-size: 0.85rem; line-height: 1.2; padding: 0 6px; }
-            .node.satellite .node-text { font-size: 0.7rem; line-height: 1.2; padding: 0 5px; }
-
-            /* Nuoli alaspäin */
-            .arrow-hint svg {
-                transform: rotate(0deg) !important;
+            
+            .mobile-btn.active {
+                background: var(--primary-color);
+                color: white;
+                border-color: var(--primary-color);
             }
-
-            .arrow-hint:hover svg {
-                transform: scale(1.15) !important;
-            }
-
-            /* Sisältöalueen typografia */
-            h2 { font-size: 1.35rem; }
-            .content-body { font-size: 0.95rem; line-height: 1.6; }
-            .content-number { font-size: 2.2rem; }
-            .content-header { gap: 10px; margin-bottom: 14px; }
         }
         
-        .mobile-nav { 
-            display: none !important; 
+        @media (min-width: 501px) {
+            .mobile-nav { display: none; }
         }
     </style>
 </head>
@@ -614,9 +470,9 @@
             <div class="intro-subtitle">
                 <p>Teemme työtä ylpeydellä, jotta kasvuyritykset voivat menestyä ja rakentaa uutta ympärilleen.</p>
                 <br>
-                <p>Olemme oikea paikka ihmisille, jotka haluavat kehittyä ammattilaisina ja ottaa vastuuta.</p>
+                <p>Olemme oikea paikka ihmisille, jotka haluavat ottaa vastuuta, kasvaa ammattilaisina ja tehdä kovia tuloksia.</p>
                 <br>
-                <p><strong>Teemme tulosta inhimillisesti.</strong></p>
+                <p><strong>Tehdään yhdessä kovaa tulosta inhimillisesti.</strong></p>
             </div>
             <!-- Visual indicator -->
             <div class="intro-indicator">
@@ -626,6 +482,10 @@
 
         <!-- VALUES LAYER -->
         <div class="values-layer">
+            <header class="values-header">
+                <h2>Grantsin arvot</h2>
+            </header>
+
             <main class="main-content">
                 <!-- Left Side: Visualization -->
                 <div class="visual-container">
@@ -634,105 +494,80 @@
                         <div class="orbit-circle-bg"></div>
                         
                         <!-- Center -->
-                        <div class="node center" onclick="activate(0)" data-id="0">
-                            <span class="node-letter">A</span>
-                            <span class="node-text">ASIAKASARVO</span>
+                        <div class="node center active" onclick="activate(0)" data-id="0">
+                            Asiakasarvo
                         </div>
 
                         <!-- Satellites -->
                         <div class="node satellite pos-1" onclick="activate(3)" data-id="3">
-                            <span class="node-letter">T</span>
-                            <span class="node-text">toistemme<br>tukeminen</span>
+                            Tiimihenki
                         </div>
 
                         <div class="node satellite pos-2" onclick="activate(1)" data-id="1">
-                            <span class="node-letter">T</span>
-                            <span class="node-text">tehokas<br>tekeminen</span>
+                            Tehokas<br>tekeminen
                         </div>
 
                         <div class="node satellite pos-3" onclick="activate(2)" data-id="2">
-                            <span class="node-letter">T</span>
-                            <span class="node-text">t<span class="ai-highlight">AI</span>tojen<br>kehittäminen</span>
+                            AI ja<br>kasvu
                         </div>
                     </div>
 
                     <!-- Mobile Nav -->
                     <div class="mobile-nav">
-                        <div class="mobile-btn" onclick="activate(0)" data-id="0">
-                            <span class="node-letter">A</span>
-                            <span class="node-text">ASIAKASARVO</span>
-                        </div>
-                        <div class="mobile-btn" onclick="activate(3)" data-id="3">
-                            <span class="node-letter">T</span>
-                            <span class="node-text">toistemme tukeminen</span>
-                        </div>
-                        <div class="mobile-btn" onclick="activate(1)" data-id="1">
-                            <span class="node-letter">T</span>
-                            <span class="node-text">tehokas tekeminen</span>
-                        </div>
-                        <div class="mobile-btn" onclick="activate(2)" data-id="2">
-                            <span class="node-letter">T</span>
-                            <span class="node-text">t<span class="ai-highlight">AI</span>tojen kehittäminen</span>
-                        </div>
+                        <div class="mobile-btn active" onclick="activate(0)" data-id="0">Asiakasarvo</div>
+                        <div class="mobile-btn" onclick="activate(3)" data-id="3">Tiimihenki</div>
+                        <div class="mobile-btn" onclick="activate(1)" data-id="1">Tehokas tekeminen</div>
+                        <div class="mobile-btn" onclick="activate(2)" data-id="2">AI ja kasvu</div>
                     </div>
                 </div>
 
                 <!-- Right Side: Content Card -->
                 <div class="content-area">
                     
-                    <!-- Initial content: Grantsin arvot -->
-                    <div id="content-initial" class="content-item active">
-                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 250px;">
-                            <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--grants-purple); margin-bottom: 30px; letter-spacing: -0.02em;">Grantsin arvot</h2>
-                            <div class="arrow-hint" onclick="hintCircles()" style="opacity: 0.4;">
-                                <svg viewBox="0 0 24 24" style="width: 48px; height: 48px; fill: var(--grants-turquoise);">
-                                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content 0: ASIAKASARVO -->
-                    <div id="content-0" class="content-item">
+                    <!-- Content 0: Asiakasarvo -->
+                    <div id="content-0" class="content-item active">
                         <div class="content-header">
                             <span class="content-number">A</span>
-                            <h2>ASIAKASARVO</h2>
+                            <h2>Asiakasarvo</h2>
                         </div>
                         <div class="content-body">
-                            <p>Tuomme pöytään dataa, analyysiä ja rohkeita ehdotuksia, jotta asiakas saa <strong>parhaan mahdollisen tuloksen</strong>. Olemme ylpeitä työstämme ja pidämme kiinni sopimuksista molempiin suuntiin. Osaamme asettua asiakkaan saappaisiin, ja kanssamme on miellyttävä työskennellä.</p>
+                            <p>Tuomme pöytään dataa, analyysiä ja rohkeita ehdotuksia, joiden avulla autamme asiakasta saamaan <strong>parhaan mahdollisen tuloksen</strong>. Olemme ylpeitä työstämme ja pidämme kiinni sopimuksista molempiin suuntiin. Kanssamme on miellyttävä työskennellä.</p>
                         </div>
                     </div>
 
-                    <!-- Content 1: tehokas tekeminen -->
+                    <!-- Content 1: Tehokas tekeminen -->
                     <div id="content-1" class="content-item">
                         <div class="content-header">
                             <span class="content-number">T</span>
-                            <h2>tehokas tekeminen</h2>
+                            <h2>Tehokas ja vastuullinen tekeminen</h2>
                         </div>
                         <div class="content-body">
-                            <p>Teemme oikeat asiat <strong>hyvällä askeltiheydellä</strong>, jolloin syntyy tulosta ja vahva tekemisen meininki. Vastuun kantaminen luo luottamusta ja <strong>vapaus</strong> antaa mahdollisuuden toimia joustavasti.</p>
+                            <p>Teemme oikeat asiat <strong>hyvällä askeltiheydellä</strong>, jolloin syntyy tulosta ja vahva tekemisen kulttuuri. Vastuun kantaminen luo luottamusta ja <strong>vapaus</strong> antaa mahdollisuuden toimia joustavasti.</p>
                         </div>
                     </div>
 
-                    <!-- Content 2: tAItojen kehittäminen -->
+                    <!-- Content 2: AI ja kasvu -->
                     <div id="content-2" class="content-item">
                         <div class="content-header">
-                            <span class="content-number">T</span>
-                            <h2>t<span class="ai-highlight">AI</span>tojen kehittäminen</h2>
+                            <span class="content-number">A</span>
+                            <h2>AI ja ammatillinen kasvu</h2>
                         </div>
                         <div class="content-body">
-                            <p>Kehitymme yksilöinä ja yrityksenä ottamalla uudet taidot ja teknologiat nopeasti käyttöön. <strong>AI on modernin työn keskeinen taito</strong>, ja varmistamme, että kaikki pysyvät mukana. Automatisoimme kaiken, mikä tehostaa työtä ja vie meitä eteenpäin.</p>
+                            <p><strong>AI on modernin työn keskeinen taito.</strong></p>
+                            <p style="margin-top: 10px;">Kehitämme osaamistamme jatkuvasti ja jaamme opit avoimesti, jotta voimme tehdä parempia päätöksiä ja kasvaa ammattilaisina.</p>
                         </div>
                     </div>
 
-                    <!-- Content 3: toistemme tukeminen -->
+                    <!-- Content 3: Tiimihenki -->
                     <div id="content-3" class="content-item">
                         <div class="content-header">
                             <span class="content-number">T</span>
-                            <h2>toistemme tukeminen</h2>
+                            <h2>Tiimihenki</h2>
                         </div>
                         <div class="content-body">
-                            <p>Paikka tiimissä ansaitaan <strong>teoilla ja asenteella</strong>, mutta kun olet mukana, tiimi kantaa myös vaikeina hetkinä eikä ketään jätetä yksin. <strong>Palaute kuuluu arkeen</strong> ja sitä annetaan rehellisesti ja välittävästi sekä kiitoksena että korjauksena.</p>
+                            <p>Tiimi tukee ja kannattelee, myös vaikeina hetkinä. Apua saa nopeasti ja ketään ei jätetä yksin.</p>
+                            <p style="margin-top: 12px;">Paikka ansaitaan <strong>teoilla ja asenteella</strong>, mutta kun olet mukana, olet osa porukkaa johon voi nojata.</p>
+                            <p style="margin-top: 12px;"><strong>Palaute kuuluu arkeen</strong> ja sitä annetaan rehellisesti sekä kiitoksena että korjauksena.</p>
                         </div>
                     </div>
 
@@ -775,32 +610,13 @@
             document.querySelectorAll('.content-item').forEach(el => el.classList.remove('active'));
 
             const nodes = document.querySelectorAll(`.node[data-id="${id}"]`);
-            nodes.forEach(n => {
-                n.classList.add('active');
-                // Joulukalenteri: avaa ympyrä pysyvästi
-                if (!n.classList.contains('opened')) {
-                    n.classList.add('opened');
-                }
-            });
+            nodes.forEach(n => n.classList.add('active'));
 
             const btns = document.querySelectorAll(`.mobile-btn[data-id="${id}"]`);
-            btns.forEach(b => {
-                b.classList.add('active');
-                if (!b.classList.contains('opened')) {
-                    b.classList.add('opened');
-                }
-            });
+            btns.forEach(b => b.classList.add('active'));
 
             const content = document.getElementById(`content-${id}`);
             if (content) content.classList.add('active');
-        }
-
-        function hintCircles() {
-            document.body.classList.add('hint-activated');
-            // Poista luokka 4.5 sekunnin kuluttua (3 x 1.5s animaatio)
-            setTimeout(() => {
-                document.body.classList.remove('hint-activated');
-            }, 4500);
         }
 
         // Scroll detection for intro -> values transition
